@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   int _screenIndex = 0;
 
   void setIndex(index) {
-    _screenIndex = index;
+    setState(() {
+      _screenIndex = index;
+    });
   }
 
   @override
@@ -32,7 +39,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class CustomNavBar extends StatelessWidget {
+class CustomNavBar extends StatefulWidget {
   final int index;
   final Function callback;
 
@@ -41,6 +48,12 @@ class CustomNavBar extends StatelessWidget {
     this.index,
     this.callback,
   }) : super(key: key);
+
+  @override
+  _CustomNavBarState createState() => _CustomNavBarState();
+}
+
+class _CustomNavBarState extends State<CustomNavBar> {
   @override
   Widget build(BuildContext context) {
     _BuildNavBarItem(Icon icon, String title) {
@@ -54,7 +67,7 @@ class CustomNavBar extends StatelessWidget {
     }
 
     return BottomNavigationBar(
-      currentIndex: index,
+      currentIndex: widget.index,
       elevation: 0,
       unselectedItemColor: Theme.of(context).accentColor,
       backgroundColor: Theme.of(context).backgroundColor,
@@ -64,8 +77,8 @@ class CustomNavBar extends StatelessWidget {
         _BuildNavBarItem(Icon(Icons.settings), 'Settings'),
       ],
       onTap: (ind) {
-        callback(ind);
+        widget.callback(ind);
       },
-    ); 
+    );
   }
 }
