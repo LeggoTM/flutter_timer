@@ -1,43 +1,8 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int _screenIndex = 0;
-
-  void setIndex(index) {
-    setState(() {
-      _screenIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> screens = [
-      Center(
-        child:
-            Text('First Screen', style: Theme.of(context).textTheme.headline1),
-      ),
-      Center(
-        child:
-            Text('Second Screen', style: Theme.of(context).textTheme.headline1),
-      ),
-      Center(
-        child:
-            Text('Third Screen', style: Theme.of(context).textTheme.headline1),
-      ),
-    ];
-
-    return Scaffold(
-      body: screens[_screenIndex],
-      bottomNavigationBar:
-          CustomNavBar(index: _screenIndex, callback: setIndex),
-    );
-  }
-}
+import '../screens/settings_screen.dart';
+import '../screens/stopwatch-screen.dart';
+import '../screens/timer_screen.dart';
 
 class CustomNavBar extends StatefulWidget {
   final int index;
@@ -78,6 +43,19 @@ class _CustomNavBarState extends State<CustomNavBar> {
       ],
       onTap: (ind) {
         widget.callback(ind);
+
+        switch (ind) {
+          case 0:
+            Navigator.of(context).pushReplacementNamed(StopwatchScreen.routeName);
+            break;
+          case 1:
+            Navigator.of(context).pushReplacementNamed(TimerScreen.routeName);
+            break;
+          case 2:
+            Navigator.of(context).pushReplacementNamed(SettingsScreen.routeName);
+            break;
+          default:
+        }
       },
     );
   }

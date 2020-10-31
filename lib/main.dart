@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 
-import 'screens/home_screen.dart';
+import 'screens/settings_screen.dart';
+import 'screens/stopwatch-screen.dart';
+import 'screens/timer_screen.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int _screenIndex = 0;
+  void _setIndex(index) {
+    setState(() {
+      _screenIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +36,12 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: HomeScreen(),
+      routes: {
+        StopwatchScreen.routeName: (context) => StopwatchScreen(screenIndex: _screenIndex, setIndexCallback: _setIndex),
+        TimerScreen.routeName: (context) => TimerScreen(screenIndex: _screenIndex, setIndexCallback: _setIndex),
+        SettingsScreen.routeName: (context) => SettingsScreen(screenIndex: _screenIndex, setIndexCallback: _setIndex),
+      },
+      home: StopwatchScreen(screenIndex: _screenIndex, setIndexCallback: _setIndex),
     );
   }
 }
